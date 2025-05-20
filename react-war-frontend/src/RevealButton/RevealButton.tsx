@@ -1,8 +1,8 @@
 
 
-function RevealButton() {
+function RevealButton({ onReveal } : {onReveal: () => void}) {
     return (
-        <button>Reveal!</button>
+        <button onClick={() => onReveal}>Reveal!</button>
     );
 }
 

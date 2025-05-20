@@ -36,13 +36,17 @@ function App() {
 
   const shuffledDeck = generateShuffledDeck();
 
+  const handleReveal = () => {
+
+  };
+
   return (
     <>
       <h1>War!</h1>
       <div id="gameArea">
         <div>
           <PlayerDeck startingDeck={shuffledDeck.slice(0, Math.floor(shuffledDeck.length / 2))} />
-          <RevealButton />
+          <RevealButton onReveal={handleReveal}/>
         </div>
       <WarQueue />
       <PlayerDeck startingDeck={shuffledDeck.slice(Math.floor(shuffledDeck.length / 2))} />

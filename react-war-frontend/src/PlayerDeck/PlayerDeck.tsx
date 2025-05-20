@@ -7,8 +7,7 @@ function PlayerDeck({startingDeck}: {startingDeck: number[]}) {
 
     return (
         <div className="playerDeck">
-            <h4>{cards.length}</h4>
-            <h3>/Deck/</h3>
+            <h3>{cards.length}</h3>
         </div>
     );
 }
