@@ -1,13 +1,9 @@
-import { useState } from "react";
 
-
-function PlayerDeck({startingDeck}: {startingDeck: number[]}) {
-
-    const [cards, setCards] = useState<number[]>(startingDeck);
+function PlayerDeck({deck}: {deck: number[]}) {
 
     return (
         <div className="playerDeck">
-            <h3>{cards.length}</h3>
+            <h3>{deck.length}</h3>
         </div>
     );
 }

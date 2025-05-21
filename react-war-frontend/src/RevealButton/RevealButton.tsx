@@ -1,8 +1,8 @@
 
 
-function RevealButton({ onReveal } : {onReveal: () => void}) {
+function RevealButton({ onReveal, disabled } : {onReveal: () => void, disabled: boolean}) {
     return (
-        <button onClick={() => onReveal}>Reveal!</button>
+        <button disabled={disabled} onClick={() => onReveal()}>Reveal!</button>
     );
 }
 
