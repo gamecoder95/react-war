@@ -4,7 +4,7 @@ import RevealButton from './RevealButton/RevealButton';
 import PlayerDeck from './PlayerDeck/PlayerDeck';
 import WarQueue from './WarQueue/WarQueue';
 import { useState, useMemo } from 'react';
-import { dealShuffledDeck, generateShuffledDeck } from './gameplay/GameplayCardFunctions';
+import { dealDeckToTwoPlayers, generateShuffledDeck } from './gameplay/GameplayCardFunctions';
 import type { Card } from './gameplay/Card';
 import type { WarDeque } from './gameplay/WarDeque';
 import { handleWar, isGameEnd, playCards } from './gameplay/GameplayFunctions';
@@ -12,7 +12,7 @@ import { handleWar, isGameEnd, playCards } from './gameplay/GameplayFunctions';
 
 function App() {
 
-  const [dealtPlayer1Deck, dealtPlayer2Deck] = useMemo(() => dealShuffledDeck(generateShuffledDeck()), [])
+  const [dealtPlayer1Deck, dealtPlayer2Deck] = useMemo(() => dealDeckToTwoPlayers(generateShuffledDeck()), [])
 
   const [player1Deck, setPlayer1Deck] = useState<Card[]>(dealtPlayer1Deck);
   const [player2Deck, setPlayer2Deck] = useState<Card[]>(dealtPlayer2Deck);
