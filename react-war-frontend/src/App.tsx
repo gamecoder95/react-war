@@ -20,6 +20,12 @@ function App() {
 
   const [isDrawingCard, setIsDrawingCard] = useState(false);
 
+  const updateUIState = (player1Deck: Card[], player2Deck: Card[], warDeque: Card[]) => {
+    setPlayer1Deck([...player1Deck]);
+    setPlayer2Deck([...player2Deck]);
+    setWarDeque([...warDeque]);
+  }
+
   const handleReveal = () => {
 
     if (isDrawingCard) return; // guard clause
@@ -37,23 +43,16 @@ function App() {
     }
 
     playCards(player1DeckUpdated, player2DeckUpdated, warDequeUpdated);
-
-    setPlayer1Deck([...player1DeckUpdated]);
-    setPlayer2Deck([...player2DeckUpdated]);
-    setWarDeque([...warDequeUpdated]);
+    updateUIState(player1DeckUpdated, player2DeckUpdated, warDequeUpdated)
 
     setTimeout(() => {
 
       handleWar(player1DeckUpdated, player2DeckUpdated, warDequeUpdated);
-
-      setPlayer1Deck([...player1DeckUpdated]);
-      setPlayer2Deck([...player2DeckUpdated]);
-      setWarDeque([...warDequeUpdated]);
+      updateUIState(player1DeckUpdated, player2DeckUpdated, warDequeUpdated);
       
       setIsDrawingCard(false);
 
     }, 1000);
-      
   };
 
   return (

@@ -1,19 +1,19 @@
 import type { Card } from "./Card";
 import { shuffleWarSpoils } from "./GameplayHelperFunctions";
 
-function playCards(player1Deck: Card[], player2Deck: Card[], warDeque: Card[]): void {
+function playCards(player1Deck: Card[], player2Deck: Card[], warDeque: Card[], playFaceUp: boolean = true): void {
 
     if (player1Deck.length > 0) {
 
       let player1TopCard = player1Deck.shift()!;
-      player1TopCard.isFaceUp = true;
+      player1TopCard.isFaceUp = playFaceUp;
       warDeque.unshift(player1TopCard);
     }
 
     if (player2Deck.length > 0) {
 
       let player2TopCard = player2Deck.shift()!;
-      player2TopCard.isFaceUp = true;
+      player2TopCard.isFaceUp = playFaceUp;
       warDeque.push(player2TopCard);
     }
 }
@@ -34,17 +34,7 @@ function handleWar(player1Deck: Card[], player2Deck: Card[], warDeque: Card[]): 
 
     } else {
 
-        if (player1Deck.length > 0) {
-            let player1TopCard = player1Deck.shift()!;
-            player1TopCard.isFaceUp = false;
-            warDeque.unshift(player1TopCard);
-        }
-
-        if (player2Deck.length > 0) {
-            let player2TopCard = player2Deck.shift()!;
-            player2TopCard.isFaceUp = false;
-            warDeque.push(player2TopCard);
-        }
+        playCards(player1Deck, player2Deck, warDeque, false);
     }
 }
 
