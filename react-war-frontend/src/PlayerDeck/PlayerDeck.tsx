@@ -1,5 +1,6 @@
+import type { Card } from "../gameplay/Card";
 
-function PlayerDeck({deck}: {deck: number[]}) {
+function PlayerDeck({deck}: {deck: Card[]}) {
 
     return (
         <div className="playerDeck">
