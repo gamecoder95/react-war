@@ -56,20 +56,18 @@ function App() {
   };
 
   return (
-    <>
-      <h1>War!</h1>
+    <div id="app">
+      <h1 className="gameTitle">War!</h1>
       {
-        winner > 0 ? <h2>{`Player ${winner} wins!`}</h2> : <></>
+        winner > 0 ? <h2 className="playerVictoryTitle">{`Player ${winner} wins!`}</h2> : <></>
       }
       <div id="gameArea">
-        <div>
-          <PlayerDeck deck={player1Deck} />
-          <RevealButton onReveal={handleReveal} disabled={isRevealButtonDisabled} />
-        </div>
+      <PlayerDeck deck={player1Deck} />
       <WarQueue warDeque={warDeque.deque} />
       <PlayerDeck deck={player2Deck} />
+      <RevealButton onReveal={handleReveal} disabled={isRevealButtonDisabled} />
       </div>
-    </>
+    </div>
   );
 }
 

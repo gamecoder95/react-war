@@ -1,14 +1,40 @@
-import type { Card } from "../gameplay/Card";
+import { CardValues, type Card } from "../gameplay/Card";
 
 
 function WarQueue({warDeque} : {warDeque: Card[]}) {
 
-    const displayCard = (card: Card) => card.isFaceUp ? card.value : '|';
+    const player1Card = warDeque[0];
+    const player2Card = warDeque[warDeque.length - 1];
+
+    const displayCard = (card: Card) => {
+
+        if (!card.isFaceUp) {
+            return '';
+        }
+
+        if (card.value === CardValues.Jack) {
+            return 'J';
+        } else if (card.value === CardValues.Queen) {
+            return 'Q';
+        } else if (card.value === CardValues.King) {
+            return 'K';
+        } else if (card.value === CardValues.Ace) {
+            return 'A';
+        } else {
+            return card.value;
+        }
+    }
+
+    const getPlayerCardClass = (card: Card) => `playerCard ${card ? (card.isFaceUp ? 'faceUp' : 'faceDown') : ''}`;
 
     return (
         <>
-            <h4 id="player1Card">{warDeque.length > 0 ? displayCard(warDeque[0]) : 'X'}</h4>
-            <h4 id="player2Card">{warDeque.length > 0 ? displayCard(warDeque[warDeque.length - 1]) : 'X'}</h4>
+            <div className={getPlayerCardClass(player1Card)}>
+                <h4 className="cardText">{warDeque.length > 0 ? displayCard(player1Card) : ''}</h4>
+            </div>
+            <div className={getPlayerCardClass(player2Card)}>
+                <h4 className="cardText">{warDeque.length > 0 ? displayCard(player2Card) : ''}</h4>
+            </div>
         </>
     );
 }
