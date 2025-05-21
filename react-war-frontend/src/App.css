@@ -27,6 +27,7 @@
   align-items: center;
   font-size: 3rem;
   background-color: gray;
+  user-select: none;
 }
 
 .playerCard.faceUp {
@@ -37,6 +38,18 @@
 .playerCard.faceDown {
   background-color: red;
   color: white;
+}
+
+.gameTitle {
+  font-size: 4rem;
+}
+
+.playerVictoryTitle {
+  font-size: 3.5rem;
+}
+
+.gameTitle, .playerVictoryTitle, .cardText {
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .deck {
@@ -50,4 +63,7 @@
   background-color: red;
   font-size: 3rem;
   color: white;
+  user-select: none;
 }
+
+/*NOTE: I wanted to add styles to add suits, however ran out of time.*/

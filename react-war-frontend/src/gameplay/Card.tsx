@@ -16,7 +16,8 @@ const CardValues = {
 
 type CardValue = typeof CardValues[keyof typeof CardValues];
 
-// NOTE: did not include suit as War is suit-agnostic. This can be added should this be reused or the game ever updated
+// NOTE: did not include suit as War is suit-agnostic.
+// I intended to add it later for styling, however I ran out of time.
 type Card = {
     value: CardValue,
     isFaceUp: boolean

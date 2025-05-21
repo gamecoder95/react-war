@@ -57,9 +57,9 @@ function App() {
 
   return (
     <div id="app">
-      <h1>War!</h1>
+      <h1 className="gameTitle">War!</h1>
       {
-        winner > 0 ? <h2>{`Player ${winner} wins!`}</h2> : <></>
+        winner > 0 ? <h2 className="playerVictoryTitle">{`Player ${winner} wins!`}</h2> : <></>
       }
       <div id="gameArea">
       <PlayerDeck deck={player1Deck} />
