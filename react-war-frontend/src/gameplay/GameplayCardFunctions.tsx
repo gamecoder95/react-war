@@ -24,11 +24,11 @@ function generateShuffledDeck() : Card[] {
   return deckOfCards;
 }
 
-function dealShuffledDeck(shuffledDeck: Card[]) : [Card[], Card[]] {
+function dealDeckToTwoPlayers(deck: Card[]) : [Card[], Card[]] {
 
   let player1Deck : Card[] = [];
   let player2Deck : Card[] = [];
-  shuffledDeck.forEach((card, i) => (i % 2 == 0 ? player1Deck : player2Deck).push(card));
+  deck.forEach((card, i) => (i % 2 == 0 ? player1Deck : player2Deck).push(card));
   return [player1Deck, player2Deck];
 }
 
@@ -39,4 +39,4 @@ function getCardsShuffled(cards: Card[]): Card[] {
           .map(obj => obj.value);
 }
 
-export { generateShuffledDeck, dealShuffledDeck, getCardsShuffled };
+export { generateShuffledDeck, dealDeckToTwoPlayers, getCardsShuffled };
