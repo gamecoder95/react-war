@@ -7,8 +7,12 @@ function WarQueue({warDeque} : {warDeque: Card[]}) {
 
     return (
         <>
-            <h4 id="player1Card">{warDeque.length > 0 ? displayCard(warDeque[0]) : 'X'}</h4>
-            <h4 id="player2Card">{warDeque.length > 0 ? displayCard(warDeque[warDeque.length - 1]) : 'X'}</h4>
+            <div className="playerCard">
+                <h4>{warDeque.length > 0 ? displayCard(warDeque[0]) : 'X'}</h4>
+            </div>
+            <div className="playerCard">
+                <h4>{warDeque.length > 0 ? displayCard(warDeque[warDeque.length - 1]) : 'X'}</h4>
+            </div>
         </>
     );
 }
