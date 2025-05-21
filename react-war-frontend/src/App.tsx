@@ -4,8 +4,9 @@ import RevealButton from './RevealButton/RevealButton';
 import PlayerDeck from './PlayerDeck/PlayerDeck';
 import WarQueue from './WarQueue/WarQueue';
 import { useState, useMemo } from 'react';
-import { dealShuffledDeck, generateShuffledDeck, shuffleWarSpoils } from './gameplay/GameplayHelperFunctions';
+import { dealShuffledDeck, generateShuffledDeck } from './gameplay/GameplayHelperFunctions';
 import type { Card } from './gameplay/Card';
+import { handleWar, isGameEnd, playCards } from './gameplay/GameplayFunctions';
 
 
 function App() {
@@ -18,8 +19,6 @@ function App() {
   const [warDeque, setWarDeque] = useState<Card[]>([]);
 
   const [isDrawingCard, setIsDrawingCard] = useState(false);
-
-  const isGameEnd = (player1Deck: Card[], player2Deck: Card[], warDeque: Card[]) => (player1Deck.length === 0 || player2Deck.length === 0) && warDeque.length === 0;
 
   const handleReveal = () => {
 
@@ -37,22 +36,7 @@ function App() {
       return;
     }
 
-    let player1TopCard: Card | null = null;
-    let player2TopCard: Card | null = null;
-
-    if (player1DeckUpdated.length > 0) {
-
-      player1TopCard = player1DeckUpdated.shift()!;
-      player1TopCard.isFaceUp = true;
-      warDequeUpdated.unshift(player1TopCard);
-    }
-
-    if (player2DeckUpdated.length > 0) {
-
-      player2TopCard = player2DeckUpdated.shift()!;
-      player2TopCard.isFaceUp = true;
-      warDequeUpdated.push(player2TopCard);
-    }
+    playCards(player1DeckUpdated, player2DeckUpdated, warDequeUpdated);
 
     setPlayer1Deck([...player1DeckUpdated]);
     setPlayer2Deck([...player2DeckUpdated]);
@@ -60,25 +44,7 @@ function App() {
 
     setTimeout(() => {
 
-      if (player1TopCard && player2TopCard && player1TopCard.value !== player2TopCard.value) {
-
-        (player1TopCard.value > player2TopCard.value ? player1DeckUpdated : player2DeckUpdated).push(...shuffleWarSpoils(warDequeUpdated));
-        warDequeUpdated.splice(0, warDequeUpdated.length);
-
-      } else {
-
-        if (player1DeckUpdated.length > 0) {
-          player1TopCard = player1DeckUpdated.shift()!;
-          player1TopCard.isFaceUp = false;
-          warDequeUpdated.unshift(player1TopCard);
-        }
-
-        if (player2DeckUpdated.length > 0) {
-          player2TopCard = player2DeckUpdated.shift()!;
-          player2TopCard.isFaceUp = false;
-          warDequeUpdated.push(player2TopCard);
-        }
-      }
+      handleWar(player1DeckUpdated, player2DeckUpdated, warDequeUpdated);
 
       setPlayer1Deck([...player1DeckUpdated]);
       setPlayer2Deck([...player2DeckUpdated]);
@@ -106,3 +72,4 @@ function App() {
 }
 
 export default App;
+
