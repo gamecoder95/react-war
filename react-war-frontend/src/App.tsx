@@ -65,80 +65,73 @@ function App() {
 
   const [isDrawingCard, setIsDrawingCard] = useState(false);
 
+  const isGameEnd = (player1Deck: number[], player2Deck: number[], warDeque: number[]) => (player1Deck.length === 0 || player2Deck.length === 0) && warDeque.length === 0;
+
   const handleReveal = () => {
 
     if (isDrawingCard) return; // guard clause
+
+    setIsDrawingCard(true);
 
     const player1DeckUpdated = [...player1Deck];
     const player2DeckUpdated = [...player2Deck];
     const warDequeUpdated = [...warDeque];
 
-    const repeatFunc = () => {
+    if (isGameEnd(player1DeckUpdated, player2DeckUpdated, warDequeUpdated)) {
+      // winner declared!
+      setIsDrawingCard(false);
+      return;
+    }
 
-      setIsDrawingCard(true);
+    let player1TopCard = -1;
+    let player2TopCard = -1;
 
-      console.log('HERE!');
-      console.log(`Player 1 Deck length = ${player1DeckUpdated.length}`);
-      console.log(`Player 2 Deck length = ${player2DeckUpdated.length}`);
+    if (player1DeckUpdated.length > 0) {
 
-      if ((player1DeckUpdated.length !== 0 && player2DeckUpdated.length !== 0) || warDequeUpdated.length !== 0) {
+      player1TopCard = player1DeckUpdated.shift()!;
+      warDequeUpdated.unshift(player1TopCard);
+      setPlayer1IsWarCardFaceUp(true);
+    }
 
-        let player1TopCard = -1;
-        let player2TopCard = -1;
+    if (player2DeckUpdated.length > 0) {
+
+      player2TopCard = player2DeckUpdated.shift()!;
+      warDequeUpdated.push(player2TopCard);
+      setPlayer2IsWarCardFaceUp(true);
+    }
+
+    setPlayer1Deck([...player1DeckUpdated]);
+    setPlayer2Deck([...player2DeckUpdated]);
+    setWarDeque([...warDequeUpdated]);
+
+    setTimeout(() => {
+
+      if (player1TopCard !== player2TopCard) {
+
+        (player1TopCard > player2TopCard ? player1DeckUpdated : player2DeckUpdated).push(...shuffleWarSpoils(warDequeUpdated));
+        warDequeUpdated.splice(0, warDequeUpdated.length);
+
+      } else {
 
         if (player1DeckUpdated.length > 0) {
-
-          player1TopCard = player1DeckUpdated.shift()!;
-          warDequeUpdated.unshift(player1TopCard);
-          setPlayer1IsWarCardFaceUp(true);
+          warDequeUpdated.unshift(player1DeckUpdated.shift()!);
+          setPlayer1IsWarCardFaceUp(false);
         }
 
         if (player2DeckUpdated.length > 0) {
-
-          player2TopCard = player2DeckUpdated.shift()!;
-          warDequeUpdated.push(player2TopCard);
-          setPlayer2IsWarCardFaceUp(true);
+          warDequeUpdated.push(player2DeckUpdated.shift()!);
+          setPlayer2IsWarCardFaceUp(false);
         }
-
-        setPlayer1Deck([...player1DeckUpdated]);
-        setPlayer2Deck([...player2DeckUpdated]);
-        setWarDeque([...warDequeUpdated]);
-
-        setTimeout(() => {
-
-          if (player1TopCard !== player2TopCard) {
-
-            (player1TopCard > player2TopCard ? player1DeckUpdated : player2DeckUpdated).push(...shuffleWarSpoils(warDequeUpdated));
-            warDequeUpdated.splice(0, warDequeUpdated.length);
-
-          } else {
-
-            if (player1DeckUpdated.length > 0) {
-              warDequeUpdated.unshift(player1DeckUpdated.shift()!);
-              setPlayer1IsWarCardFaceUp(false);
-            }
-
-            if (player2DeckUpdated.length > 0) {
-              warDequeUpdated.push(player2DeckUpdated.shift()!);
-              setPlayer2IsWarCardFaceUp(false);
-            }
-          }
-
-          setPlayer1Deck([...player1DeckUpdated]);
-          setPlayer2Deck([...player2DeckUpdated]);
-          setWarDeque([...warDequeUpdated]);
-          
-          setIsDrawingCard(false);
-
-        }, 25);
-
-        setTimeout(repeatFunc, 100);
       }
 
-      // setIsDrawingCard(false);
-    };
+      setPlayer1Deck([...player1DeckUpdated]);
+      setPlayer2Deck([...player2DeckUpdated]);
+      setWarDeque([...warDequeUpdated]);
+      
+      setIsDrawingCard(false);
 
-    repeatFunc();
+    }, 1000);
+      
   };
 
   return (
@@ -147,7 +140,7 @@ function App() {
       <div id="gameArea">
         <div>
           <PlayerDeck deck={player1Deck} />
-          <RevealButton onReveal={handleReveal} disabled={isDrawingCard} />
+          <RevealButton onReveal={handleReveal} disabled={isDrawingCard || isGameEnd(player1Deck, player2Deck, warDeque)} />
         </div>
       <WarQueue warDeque={warDeque} isPlayer1FaceUp={player1IsWarCardFaceUp} isPlayer2FaceUp={player2IsWarCardFaceUp} />
       <PlayerDeck deck={player2Deck} />
