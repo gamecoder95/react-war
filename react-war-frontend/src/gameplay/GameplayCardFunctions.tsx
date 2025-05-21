@@ -13,7 +13,7 @@ function generateShuffledDeck() : Card[] {
     }
   }
 
-  // shuffle cards
+  // shuffle cards in place (hence why I'm not using the "getCardsShuffled" function)
   for (let i = deckOfCards.length - 1; i > 0; --i) {
       // Generate random index between [0, i]
       const j = Math.floor(Math.random() * (i + 1));
@@ -32,15 +32,11 @@ function dealShuffledDeck(shuffledDeck: Card[]) : [Card[], Card[]] {
   return [player1Deck, player2Deck];
 }
 
-// This function is to lessen the chances of the game stalling
-// shuffles the given array of cards by mapping the cards to objects with a random number key
-// the cards are then sorted based off their keys, before finally being mapped back to 
-// their original card values.
-function shuffleWarSpoils(warDeque: Card[]): Card[] {
-  return warDeque
+function getCardsShuffled(cards: Card[]): Card[] {
+  return cards
           .map(card => ({value: card, sort: Math.random()}))
           .sort((a, b) => a.sort - b.sort)
           .map(obj => obj.value);
 }
 
-export { generateShuffledDeck, dealShuffledDeck, shuffleWarSpoils };
+export { generateShuffledDeck, dealShuffledDeck, getCardsShuffled };
