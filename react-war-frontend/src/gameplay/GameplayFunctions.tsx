@@ -34,6 +34,8 @@ function handleWar(player1Deck: Card[], player2Deck: Card[], warDeque: WarDeque)
 
         (player1BattleCard.value > player2BattleCard.value ? player1Deck : player2Deck).push(...getCardsShuffled(warDeque.deque));
         warDeque.deque.splice(0, warDeque.deque.length);
+        warDeque.player1Length = 0;
+        warDeque.player2Length = 0;
 
     } else if (player1Deck.length === 0 && player2Deck.length === 0) {
 
@@ -42,6 +44,8 @@ function handleWar(player1Deck: Card[], player2Deck: Card[], warDeque: WarDeque)
         player1Deck.push(...getCardsShuffled(warDeque.deque.slice(0, warDeque.player1Length)));
         player2Deck.push(...getCardsShuffled(warDeque.deque.slice(warDeque.player1Length)));
         warDeque.deque.splice(0, warDeque.deque.length);
+        warDeque.player1Length = 0;
+        warDeque.player2Length = 0;
 
     } else {
 
@@ -49,6 +53,6 @@ function handleWar(player1Deck: Card[], player2Deck: Card[], warDeque: WarDeque)
     }
 }
 
-const isGameEnd = (player1Deck: Card[], player2Deck: Card[], warDeque: WarDeque) => (player1Deck.length === 0 || player2Deck.length === 0) && warDeque.deque.length === 0;
+const isGameEnd = (player1Deck: Card[], player2Deck: Card[], warDeque: WarDeque) => ((player1Deck.length === 0 && player2Deck.length > 0) || (player2Deck.length === 0 && player1Deck.length > 0)) && warDeque.deque.length === 0;
 
 export { playCards, handleWar, isGameEnd }

@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it } from "@jest/globals";
 import { dealDeckToTwoPlayers, generateShuffledDeck, getCardsShuffled } from '../src/gameplay/GameplayCardFunctions';
 import { Card, CardValues } from "../src/gameplay/Card";
+import { getDummyDeck } from "./TestUtils";
 
 describe('Generate shuffled deck of cards', () => {
 
@@ -56,11 +57,7 @@ describe('Deal a deck of cards to 2 players', () => {
     });
 
     it('accounts for an odd numbered deck by having the first deck with an additional card', () => {
-        const deck = [{value: CardValues.Ace, isFaceUp: false}, 
-                      {value: CardValues.Three, isFaceUp: false}, 
-                      {value: CardValues.Two, isFaceUp: false}, 
-                      {value: CardValues.Jack, isFaceUp: false}, 
-                      {value: CardValues.Queen, isFaceUp: false}]
+        const deck = getDummyDeck();
         const [deck1, deck2] = dealDeckToTwoPlayers(deck);
 
         expect(deck1.length).toBe(deck2.length + 1);
@@ -72,11 +69,7 @@ describe('Shuffle a pile of cards of any size', () => {
     let cards: Card[] = [];
 
     beforeEach(() => {
-        cards = [{value: CardValues.Ace, isFaceUp: false}, 
-                {value: CardValues.Three, isFaceUp: false}, 
-                {value: CardValues.Two, isFaceUp: false}, 
-                {value: CardValues.Jack, isFaceUp: false}, 
-                {value: CardValues.Queen, isFaceUp: false}]
+        cards = getDummyDeck();
     });
 
     it('returns a randomly rearranged list of the same cards', () => {
